@@ -1,0 +1,254 @@
+/* Floating button */
+.clipboard-floating-btn {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    user-select: none;
+}
+
+.clipboard-floating-btn:hover {
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.clipboard-floating-btn:active {
+    transform: translateY(-52%) scale(1.2);
+    transition-duration: 0.2s;
+}
+
+/* Panel */
+.clipboard-panel {
+    position: fixed;
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 320px;
+    max-height: 70vh;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    z-index: 10001;
+    display: none;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    user-select: none;
+}
+
+.clipboard-panel.active {
+    display: flex;
+}
+
+.panel-header {
+    padding: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+
+.panel-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.add-btn {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease;
+    user-select: none;
+}
+
+.add-btn:hover {
+    background: #2563eb;
+}
+
+.clips-container {
+    padding: 16px;
+    overflow-y: auto;
+    max-height: calc(70vh - 200px);
+    user-select: none;
+}
+
+.clip-item {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+}
+
+.clip-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    background: #EEF5FF;
+}
+
+.clip-item:active {
+    transform: translateY(0px) scale(1.02);
+    transition-duration: 0.2s;
+}
+
+.clip-text {
+    font-size: 14px;
+    color: #4a5568;
+    line-height: 1.5;
+    word-break: break-word;
+    user-select: none;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clip-item:hover  {
+    opacity: 1;
+}
+
+.delete-btn:hover {
+    background: rgb(239, 68, 68);
+    opacity: 0.8;
+}
+
+/* Add clip modal */
+.add-clip-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    z-index: 10002;
+    display: none;
+    width: 400px;
+}
+
+.add-clip-modal.active {
+    display: block;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10001;
+    display: none;
+}
+
+.modal-overlay.active {
+    display: block;
+}
+
+.modal-textarea {
+    width: 100%;
+    height: 100px;
+    margin: 12px 0;
+    padding: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    resize: none;
+    font-family: inherit;
+    user-select: none;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    user-select: none;
+}
+
+.modal-btn {
+    padding: 6px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.save-btn {
+    background: #3b82f6;
+    color: white;
+    border: none;
+}
+
+.save-btn:hover {
+    background: #2563eb;
+}
+
+.cancel-btn {
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.cancel-btn:hover {
+    background: #EEF5FF;
+}
+
+/* Toast notification */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #21BF73;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 10003;
+    user-select: none;
+}
+
+.toast.active {
+    transform: translateY(0);
+    opacity: 1;
+}
