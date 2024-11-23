@@ -1,18 +1,23 @@
 {
   "manifest_version": 3,
-  "name": "Clipboard History+",
+  "name": "Clip Copy Board+",
   "version": "1.0",
-  "description": "A sleek floating clipboard manager",
+  "description": "A floating clip copy board",
   "permissions": ["storage", "clipboardWrite"],
-  "background": {
-    "service_worker": "background.js"
-  },
   "action": {
-    "default_title": "Clipboard History+"
+    "default_title": "Clip Copy Board+",
+    "default_icon": {
+      "16": "./icons/icon24.svg",
+      "24": "./icons/icon24.svg",
+      "48": "./icons/icon24.svg",
+      "128": "./icons/icon24.svg"
+    }
   },
   "icons": {
-    "48": "icons/icon48.svg",
-    "128": "icons/icon128.png"
+    "16": "./icons/icon24.svg",
+    "24": "./icons/icon24.svg",
+    "48": "./icons/icon24.svg",
+    "128": "./icons/icon24.svg"
   },
   "content_scripts": [
     {
