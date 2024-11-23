@@ -258,3 +258,7 @@
     opacity: 0.9;
     color: white;
 }
+
+.dragging {
+    cursor: grabbing;
+}
