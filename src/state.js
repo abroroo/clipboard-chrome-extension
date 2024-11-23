@@ -45,7 +45,6 @@ export function renderClips(toast) {
             const id = parseInt(btn.dataset.id);
             clips = clips.filter(clip => clip.id !== id);
             chrome.storage.local.set({clips}, () => renderClips(toast));
-            showToast(toast,'Clip deleted!');
         });
     });
 

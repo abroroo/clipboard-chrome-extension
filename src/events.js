@@ -30,7 +30,7 @@ export function bindEvents(floatingBtn, panel, modal, modalOverlay, toast) {
         document.querySelector('.save-btn').addEventListener('click', () => {
             const text = document.querySelector('.modal-textarea').value.trim();
             if (text) {
-                addClip(text, renderClips);
+                addClip(text, () => renderClips(toast));
                 closeModal(modal, modalOverlay);
                 showToast(toast, 'Clip saved successfully!');
             }
@@ -46,9 +46,11 @@ export function bindEvents(floatingBtn, panel, modal, modalOverlay, toast) {
 
  export function showToast(toast, message) {
         toast.textContent = message;
+
         toast.classList.add('active');
         setTimeout(() => {
             toast.classList.remove('active');
+
         }, 3000);
     }
 

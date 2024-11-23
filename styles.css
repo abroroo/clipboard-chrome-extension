@@ -250,5 +250,11 @@
 
 .toast.active {
     transform: translateY(0);
-    opacity: 1;
+    opacity: 0.9;
+}
+
+.toast-red {
+    background: rgb(239, 68, 68);
+    opacity: 0.9;
+    color: white;
 }
