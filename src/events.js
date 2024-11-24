@@ -36,6 +36,26 @@ export function bindEvents(floatingBtn, panel, modal, modalOverlay, toast) {
             }
         });
 
+        document.querySelector('.modal-textarea').addEventListener('keydown', (event) => {
+            const text = document.querySelector('.modal-textarea').value.trim();
+            if (event.key === 'Enter' && !event.shiftKey && text) {
+                event.preventDefault(); // Prevent newline in textarea
+                closeModal(modal, modalOverlay);
+                addClip(text, () => renderClips(toast));
+                showToast(toast, 'Clip saved successfully!');
+
+            } else if (event.key === 'Escape') {
+                closeModal(modal, modalOverlay);
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && panel.classList.contains('active')) {
+                panel.classList.remove('active');
+            }
+        });
+
+
     }
 
  export function closeModal(modal, modalOverlay) {

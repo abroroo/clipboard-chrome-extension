@@ -1,3 +1,6 @@
+/*!**********************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/floating-button.css ***!
+  \**********************************************************************************/
 .clipboard-floating-btn {
     position: fixed;
     right: 20px;
@@ -32,6 +35,9 @@
 .dragging {
     cursor: grabbing;
 }
+/*!************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/panel.css ***!
+  \************************************************************************/
 .clipboard-panel {
     position: fixed;
     right: 80px;
@@ -153,6 +159,9 @@
     opacity: 0.8;
 }
 
+/*!************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/modal.css ***!
+  \************************************************************************/
 .add-clip-modal {
     position: fixed;
     top: 50%;
@@ -231,6 +240,9 @@
 .cancel-btn:hover {
     background: #EEF5FF;
 }
+/*!************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/toast.css ***!
+  \************************************************************************/
 .toast {
     position: fixed;
     bottom: 24px;
