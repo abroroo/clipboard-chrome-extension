@@ -1,0 +1,26 @@
+.toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #21BF73;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 10003;
+    user-select: none;
+}
+
+.toast.active {
+    transform: translateY(0);
+    opacity: 0.9;
+}
+
+.toast-red {
+    background: rgb(239, 68, 68);
+    opacity: 0.9;
+    color: white;
+}

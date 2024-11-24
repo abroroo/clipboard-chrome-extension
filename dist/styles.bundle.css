@@ -1,4 +1,6 @@
-/* Floating button */
+/*!**********************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/floating-button.css ***!
+  \**********************************************************************************/
 .clipboard-floating-btn {
     position: fixed;
     right: 20px;
@@ -30,7 +32,12 @@
     transition-duration: 0.2s;
 }
 
-/* Panel */
+.dragging {
+    cursor: grabbing;
+}
+/*!************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/panel.css ***!
+  \************************************************************************/
 .clipboard-panel {
     position: fixed;
     right: 80px;
@@ -67,6 +74,7 @@
     font-weight: 600;
     color: #1a1a1a;
 }
+
 
 .add-btn {
     background: #3b82f6;
@@ -151,7 +159,9 @@
     opacity: 0.8;
 }
 
-/* Add clip modal */
+/*!************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/modal.css ***!
+  \************************************************************************/
 .add-clip-modal {
     position: fixed;
     top: 50%;
@@ -230,8 +240,9 @@
 .cancel-btn:hover {
     background: #EEF5FF;
 }
-
-/* Toast notification */
+/*!************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/toast.css ***!
+  \************************************************************************/
 .toast {
     position: fixed;
     bottom: 24px;
@@ -259,6 +270,4 @@
     color: white;
 }
 
-.dragging {
-    cursor: grabbing;
-}
+/*# sourceMappingURL=styles.bundle.css.map*/

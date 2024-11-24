@@ -1,0 +1,120 @@
+.clipboard-panel {
+    position: fixed;
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 320px;
+    max-height: 70vh;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    z-index: 10001;
+    display: none;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    user-select: none;
+}
+
+.clipboard-panel.active {
+    display: flex;
+}
+
+.panel-header {
+    padding: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+
+.panel-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+
+.add-btn {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease;
+    user-select: none;
+}
+
+.add-btn:hover {
+    background: #2563eb;
+}
+
+.clips-container {
+    padding: 16px;
+    overflow-y: auto;
+    max-height: calc(70vh - 200px);
+    user-select: none;
+}
+
+.clip-item {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+}
+
+.clip-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    background: #EEF5FF;
+}
+
+.clip-item:active {
+    transform: translateY(0px) scale(1.02);
+    transition-duration: 0.2s;
+}
+
+.clip-text {
+    font-size: 14px;
+    color: #4a5568;
+    line-height: 1.5;
+    word-break: break-word;
+    user-select: none;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clip-item:hover  {
+    opacity: 1;
+}
+
+.delete-btn:hover {
+    background: rgb(239, 68, 68);
+    opacity: 0.8;
+}
