@@ -1,4 +1,5 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: 'production',
@@ -20,6 +21,16 @@ module.exports = {
                     },
                 },
             },
+            {
+                test: /\.css$/i, // Match .css files
+                use: [MiniCssExtractPlugin.loader, 'css-loader'], // Extract and process CSS
+            },
         ],
     },
+    plugins: [
+        // Plugin to bundle CSS into a separate file
+        new MiniCssExtractPlugin({
+            filename: 'styles.bundle.css', // Output CSS file
+        }),
+    ],
 };
