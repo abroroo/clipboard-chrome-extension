@@ -3,13 +3,15 @@
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
+    padding: 2px;
+    box-sizing: content-box;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    z-index: 10000;
+    z-index: 999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,6 +19,7 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     user-select: none;
+    pointer-events: auto;
 }
 
 .clipboard-floating-btn:hover {
@@ -32,3 +35,4 @@
 .dragging {
     cursor: grabbing;
 }
+

@@ -17,7 +17,7 @@
         panel.className = 'clipboard-panel';
         panel.innerHTML = `
         <div class="panel-header">
-            <div class="panel-title">Go to Korean...</div>
+            <div class="panel-title">Copy clips</div>
             <button class="add-btn">+ New</button>
         </div>
         <div class="clips-container"></div>
@@ -29,7 +29,7 @@
         const modal = document.createElement('div');
         modal.className = 'add-clip-modal';
         modal.innerHTML = `
-        <h3 style="user-select: none; margin-bottom: 5px;">Add New Clip</h3>
+        <h3 class="modal-title" style="user-select: none; margin-bottom: 5px;">Add New Clip</h3>
         <textarea class="modal-textarea" placeholder="Enter text to save..."></textarea>
         <div class="modal-buttons">
             <button class="modal-btn cancel-btn">Cancel</button>
