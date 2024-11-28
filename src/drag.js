@@ -3,9 +3,9 @@ export function enableDragging(floatingBtn) {
     let startY, initialY;
     let animationFrameId = null;
 
-    const onMouseMove = (e) => {
+    const onMove = (clientY) => {
         if (isDragging) {
-            const dy = e.clientY - startY;
+            const dy = clientY - startY;
 
             // Use requestAnimationFrame to update position
             if (!animationFrameId) {
@@ -18,17 +18,34 @@ export function enableDragging(floatingBtn) {
         }
     };
 
-    floatingBtn.addEventListener('mousedown', (e) => {
+    const onMouseMove = (e) => {
+        onMove(e.clientY);
+    };
+
+    const onTouchMove = (e) => {
+        onMove(e.touches[0].clientY);
+    };
+
+    const onStart = (clientY) => {
         floatingBtn.classList.add('dragging');
         isDragging = true;
-        startY = e.clientY;
+        startY = clientY;
         initialY = floatingBtn.getBoundingClientRect().top;
         document.body.style.userSelect = 'none'; // Prevent text selection
+    };
+
+    floatingBtn.addEventListener('mousedown', (e) => {
+        onStart(e.clientY);
+    });
+
+    floatingBtn.addEventListener('touchstart', (e) => {
+        onStart(e.touches[0].clientY);
     });
 
     document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('touchmove', onTouchMove);
 
-    document.addEventListener('mouseup', () => {
+    const onEnd = () => {
         if (isDragging) {
             isDragging = false;
             floatingBtn.classList.remove('dragging');
@@ -38,5 +55,8 @@ export function enableDragging(floatingBtn) {
                 animationFrameId = null;
             }
         }
-    });
+    };
+
+    document.addEventListener('mouseup', onEnd);
+    document.addEventListener('touchend', onEnd);
 }

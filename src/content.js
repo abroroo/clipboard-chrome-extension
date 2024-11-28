@@ -2,7 +2,7 @@ import './styles/floating-button.css';
 import './styles/panel.css';
 import './styles/modal.css';
 import './styles/toast.css';
-
+import './styles/global.css';
 
 import {createFloatingButton, createModal, createModalOverlay, createPanel, createToast} from './ui.js';
 import {loadClips, renderClips} from './state.js';

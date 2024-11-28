@@ -1,23 +1,23 @@
 {
   "manifest_version": 3,
-  "name": "Clip Copy Board+",
+  "name": "Cliply: Save & Copy Clips",
   "version": "1.0",
-  "description": "A floating clip copy board",
+  "description": "Cliply: A simple, intuitive tool for saving, copying, and managing text snippets on any webpage.",
   "permissions": ["storage", "clipboardWrite"],
   "action": {
-    "default_title": "Clip Copy Board+",
+    "default_title": "Clipy+",
     "default_icon": {
-      "16": "./icons/icon24.svg",
-      "24": "./icons/icon24.svg",
-      "48": "./icons/icon24.svg",
-      "128": "./icons/icon24.svg"
+      "16": "./icons/icon24.png",
+      "24": "./icons/icon24.png",
+      "48": "./icons/icon24.png",
+      "128": "./icons/icon24.png"
     }
   },
   "icons": {
-    "16": "./icons/icon24.svg",
-    "24": "./icons/icon24.svg",
-    "48": "./icons/icon24.svg",
-    "128": "./icons/icon24.svg"
+    "16": "./icons/icon24.png",
+    "24": "./icons/icon24.png",
+    "48": "./icons/icon24.png",
+    "128": "./icons/icon24.png"
   },
   "content_scripts": [
     {
