@@ -98,7 +98,7 @@
 .clip-item:hover {
     transform: translateY(-4px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    background: #E5F6FF;
+    background: #FEB300;
     color: #000;
 }
 

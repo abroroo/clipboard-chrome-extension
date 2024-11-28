@@ -137,14 +137,14 @@
     transform: translateX(-50%);
     width: 0;
     height: 100%;
-    background: #eeeeee; /* Orange background on hover */
+    background: #FEB300; /* Orange background on hover */
     z-index: -1;
     transition: width 150ms ease-in-out;
 }
 
 .cancel-btn:hover {
     color: #000; /* Dark gray text on hover */
-    border: 1px solid #eeeeee; /* Orange border on hover */
+    border: 1px solid #FEB300; /* Orange border on hover */
 }
 
 .cancel-btn:hover::after {
