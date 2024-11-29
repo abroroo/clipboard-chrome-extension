@@ -6,7 +6,7 @@ Perfect for quick tasks like saving common phrases, repeated text, or notes—Cl
 
 🌟 **Save it. Copy it. Done.**
 
-#### Fun Fact
+#### 💡 Fun Fact
 
 The idea for Cliply was inspired by the need to text in Korean efficiently. Instead of repeatedly typing commonly used phrases, they were saved as snippets to be quickly copied whenever needed!
 
