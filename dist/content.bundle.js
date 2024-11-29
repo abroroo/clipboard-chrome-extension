@@ -14,18 +14,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/styles/global.css":
-/*!*******************************!*\
-  !*** ./src/styles/global.css ***!
-  \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "./src/styles/modal.css":
 /*!******************************!*\
   !*** ./src/styles/modal.css ***!
@@ -386,11 +374,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles_panel_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles/panel.css */ "./src/styles/panel.css");
 /* harmony import */ var _styles_modal_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles/modal.css */ "./src/styles/modal.css");
 /* harmony import */ var _styles_toast_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./styles/toast.css */ "./src/styles/toast.css");
-/* harmony import */ var _styles_global_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./styles/global.css */ "./src/styles/global.css");
-/* harmony import */ var _ui_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ui.js */ "./src/ui.js");
-/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./state.js */ "./src/state.js");
-/* harmony import */ var _events_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./events.js */ "./src/events.js");
-/* harmony import */ var _drag_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./drag.js */ "./src/drag.js");
+/* harmony import */ var _ui_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ui.js */ "./src/ui.js");
+/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./state.js */ "./src/state.js");
+/* harmony import */ var _events_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./events.js */ "./src/events.js");
+/* harmony import */ var _drag_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./drag.js */ "./src/drag.js");
 
 
 
@@ -399,22 +386,21 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-var floatingBtn = (0,_ui_js__WEBPACK_IMPORTED_MODULE_5__.createFloatingButton)();
-var panel = (0,_ui_js__WEBPACK_IMPORTED_MODULE_5__.createPanel)();
-var modal = (0,_ui_js__WEBPACK_IMPORTED_MODULE_5__.createModal)();
-var modalOverlay = (0,_ui_js__WEBPACK_IMPORTED_MODULE_5__.createModalOverlay)();
-var toast = (0,_ui_js__WEBPACK_IMPORTED_MODULE_5__.createToast)();
+var floatingBtn = (0,_ui_js__WEBPACK_IMPORTED_MODULE_4__.createFloatingButton)();
+var panel = (0,_ui_js__WEBPACK_IMPORTED_MODULE_4__.createPanel)();
+var modal = (0,_ui_js__WEBPACK_IMPORTED_MODULE_4__.createModal)();
+var modalOverlay = (0,_ui_js__WEBPACK_IMPORTED_MODULE_4__.createModalOverlay)();
+var toast = (0,_ui_js__WEBPACK_IMPORTED_MODULE_4__.createToast)();
 document.body.appendChild(floatingBtn);
 document.body.appendChild(panel);
 document.body.appendChild(modal);
 document.body.appendChild(modalOverlay);
 document.body.appendChild(toast);
-(0,_state_js__WEBPACK_IMPORTED_MODULE_6__.loadClips)(function () {
-  return (0,_state_js__WEBPACK_IMPORTED_MODULE_6__.renderClips)(toast);
+(0,_state_js__WEBPACK_IMPORTED_MODULE_5__.loadClips)(function () {
+  return (0,_state_js__WEBPACK_IMPORTED_MODULE_5__.renderClips)(toast);
 });
-(0,_events_js__WEBPACK_IMPORTED_MODULE_7__.bindEvents)(floatingBtn, panel, modal, modalOverlay, toast);
-(0,_drag_js__WEBPACK_IMPORTED_MODULE_8__.enableDragging)(floatingBtn);
+(0,_events_js__WEBPACK_IMPORTED_MODULE_6__.bindEvents)(floatingBtn, panel, modal, modalOverlay, toast);
+(0,_drag_js__WEBPACK_IMPORTED_MODULE_7__.enableDragging)(floatingBtn);
 })();
 
 /******/ })()

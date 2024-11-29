@@ -59,6 +59,9 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     user-select: none;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
 }
 
 .clipboard-panel.active {
@@ -195,6 +198,9 @@
 .add-clip-modal, .add-clip-modal * {
     all: unset; /* Remove all inherited styles */
     box-sizing: border-box; /* Ensure predictable sizing */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
 }
 
 .add-clip-modal {
@@ -361,6 +367,8 @@
     transition: all 0.3s ease;
     z-index: 10003;
     user-select: none;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
 }
 
 .toast.active {
@@ -373,18 +381,5 @@
     opacity: 0.9;
     color: white;
 }
-/*!*************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/global.css ***!
-  \*************************************************************************/
-html, body {
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    color: #333;
-}
-
-body *:not(.clipboard-floating-btn) {
-    pointer-events: all; /* Ensures other elements remain clickable */
-}
-
 
 /*# sourceMappingURL=styles.bundle.css.map*/
