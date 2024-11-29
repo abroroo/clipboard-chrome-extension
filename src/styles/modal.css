@@ -1,6 +1,9 @@
 .add-clip-modal, .add-clip-modal * {
     all: unset; /* Remove all inherited styles */
     box-sizing: border-box; /* Ensure predictable sizing */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
 }
 
 .add-clip-modal {

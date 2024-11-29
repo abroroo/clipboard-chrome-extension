@@ -12,6 +12,8 @@
     transition: all 0.3s ease;
     z-index: 10003;
     user-select: none;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
 }
 
 .toast.active {
