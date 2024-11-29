@@ -1,4 +1,4 @@
-# Cliply: Your Personal Clipboard Assistant
+# Cliply: Handy Clipboard Panel
 
 Cliply is a simple, draggable tool designed to save and manage your frequently used text snippets. With a floating button that seamlessly integrates into any webpage, Cliply lets you access, copy, and add new clips effortlessly.
 
@@ -6,14 +6,16 @@ Perfect for quick tasks like saving common phrases, repeated text, or notes—Cl
 
 **Save it. Copy it. Done.**
 
----
 
-## Contributing
+## Contributing & License
 
 Feel free to open issues for bugs or feature suggestions!
 
----
-
-## License
-
 This project is licensed under the [MIT License](LICENSE).  
+
+
+## 🌟 Fun Fact
+
+The idea for Cliply was inspired by the need to text in Korean efficiently. Instead of repeatedly typing commonly used phrases, they were saved as snippets to be quickly copied whenever needed!
+
+
