@@ -90,11 +90,12 @@
     border-radius: 12px;
     padding: 12px;
     margin-bottom: 12px;
+    max-height: 100px;
     cursor: pointer;
     transition: all 0.3s ease;
     border: 1px solid rgba(0, 0, 0, 0.1);
     position: relative;
-    overflow: hidden;
+    overflow: scroll;
     user-select: none;
 }
 
