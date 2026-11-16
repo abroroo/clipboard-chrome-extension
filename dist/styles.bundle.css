@@ -1,11 +1,9 @@
-/*!**********************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/floating-button.css ***!
-  \**********************************************************************************/
 .clipboard-floating-btn {
     position: fixed;
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
+    touch-action: none;
     width: 36px;
     height: 36px;
     padding: 0;
@@ -26,35 +24,54 @@
 }
 
 .clipboard-floating-btn:hover {
-    transform: translateY(-50%) scale(1.05);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
-.clipboard-floating-btn:active {
-    transform: translateY(-52%) scale(1.2);
-    transition-duration: 0.2s;
+.clipboard-floating-btn:hover svg {
+    transform: scale(1.08);
 }
 
-.dragging {
+.clipboard-floating-btn:active svg {
+    transform: scale(0.92);
+}
+
+.clipboard-floating-btn svg {
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.clipboard-floating-btn.open {
+    box-shadow: 0 0 0 3px rgba(6, 143, 255, 0.35), 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* While dragging, follow the pointer instantly. */
+.clipboard-floating-btn.dragging {
     cursor: grabbing;
+    transition: box-shadow 0.3s ease;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+}
+
+.clipboard-floating-btn.dragging svg {
+    transform: scale(1.12);
+}
+
+/* On release, glide to the nearest edge. */
+.clipboard-floating-btn.snapping {
+    transition: left 0.32s cubic-bezier(0.22, 1, 0.36, 1), top 0.32s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
 }
 
 
-/*!************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/panel.css ***!
-  \************************************************************************/
 .clipboard-panel {
     position: fixed;
-    right: 80px;
-    top: 50%;
-    transform: translateY(-50%);
+    /* left/top are set by JS, anchored to the floating button */
+    left: 0;
+    top: 0;
     width: 320px;
     max-height: 70vh;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
     z-index: 10001;
-    display: none;
+    display: flex;
     flex-direction: column;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -62,10 +79,62 @@
     font-family: Arial, sans-serif;
     font-size: 14px;
     color: #333;
+    /* hidden state: faded + slightly shrunk toward the button */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.94) translateY(6px);
+    transition: opacity 0.18s ease, transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.24s;
 }
 
 .clipboard-panel.active {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: scale(1) translateY(0);
+    transition: opacity 0.18s ease, transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s;
+}
+
+.clip-search {
+    all: unset;
+    box-sizing: border-box;
+    display: block;
+    margin: 12px 16px 0;
+    padding: 8px 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    width: calc(100% - 32px);
+}
+
+.clip-search[hidden] {
+    display: none;
+}
+
+.clip-search:focus {
+    border-color: #068FFF;
+    box-shadow: 0 0 0 3px rgba(6, 143, 255, 0.15);
+}
+
+.clips-empty {
+    text-align: center;
+    padding: 24px 8px;
+    color: #666;
+}
+
+.clips-empty-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+
+.clips-empty-hint {
+    font-size: 13px;
+    line-height: 1.5;
 }
 
 .panel-header {
@@ -133,15 +202,39 @@
 .clip-item {
     background: rgba(255, 255, 255, 0.7);
     border-radius: 12px;
-    padding: 12px;
+    padding: 12px 36px 12px 12px;
     margin-bottom: 12px;
     max-height: 100px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease, box-shadow 0.25s ease, opacity 0.18s ease;
     border: 1px solid rgba(0, 0, 0, 0.1);
     position: relative;
-    overflow: scroll;
+    overflow: auto;
     user-select: none;
+    /* staggered entry */
+    animation: clip-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--i, 0) * 30ms);
+}
+
+@keyframes clip-in {
+    from { opacity: 0; transform: translateY(8px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.clip-item.copied {
+    background: #21BF73;
+    color: #fff;
+    transform: scale(0.98);
+}
+
+.clip-item.removing {
+    opacity: 0;
+    transform: translateX(16px) scale(0.96);
+}
+
+.clip-item:focus-visible {
+    outline: 2px solid #068FFF;
+    outline-offset: 2px;
 }
 
 .clip-item:hover {
@@ -184,7 +277,8 @@
     justify-content: center;
 }
 
-.clip-item:hover  {
+.clip-item:hover .delete-btn,
+.clip-item:focus-visible .delete-btn {
     opacity: 1;
 }
 
@@ -193,9 +287,6 @@
     opacity: 0.8;
 }
 
-/*!************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/modal.css ***!
-  \************************************************************************/
 .add-clip-modal, .add-clip-modal * {
     all: unset; /* Remove all inherited styles */
     box-sizing: border-box; /* Ensure predictable sizing */
@@ -222,6 +313,46 @@
 
 .add-clip-modal.active {
     display: block;
+    animation: modal-in 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes modal-in {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.modal-textarea:focus {
+    border-color: #068FFF;
+    box-shadow: 0 0 0 3px rgba(6, 143, 255, 0.15);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: -4px 0 12px;
+    font-size: 12px;
+    color: #888;
+    user-select: none;
+}
+
+.modal-counter.over {
+    color: #EF4444;
+    font-weight: 600;
+}
+
+.save-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.save-btn:disabled:hover {
+    color: #424242;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.save-btn:disabled:hover::after {
+    width: 0;
 }
 
 .modal-overlay {
@@ -351,9 +482,6 @@
 .cancel-btn:hover::after {
     width: 110%;
 }
-/*!************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/toast.css ***!
-  \************************************************************************/
 .toast {
     position: fixed;
     bottom: 24px;

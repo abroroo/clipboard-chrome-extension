@@ -1,15 +1,15 @@
 .clipboard-panel {
     position: fixed;
-    right: 80px;
-    top: 50%;
-    transform: translateY(-50%);
+    /* left/top are set by JS, anchored to the floating button */
+    left: 0;
+    top: 0;
     width: 320px;
     max-height: 70vh;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
     z-index: 10001;
-    display: none;
+    display: flex;
     flex-direction: column;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -17,10 +17,62 @@
     font-family: Arial, sans-serif;
     font-size: 14px;
     color: #333;
+    /* hidden state: faded + slightly shrunk toward the button */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.94) translateY(6px);
+    transition: opacity 0.18s ease, transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.24s;
 }
 
 .clipboard-panel.active {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: scale(1) translateY(0);
+    transition: opacity 0.18s ease, transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s;
+}
+
+.clip-search {
+    all: unset;
+    box-sizing: border-box;
+    display: block;
+    margin: 12px 16px 0;
+    padding: 8px 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    width: calc(100% - 32px);
+}
+
+.clip-search[hidden] {
+    display: none;
+}
+
+.clip-search:focus {
+    border-color: #068FFF;
+    box-shadow: 0 0 0 3px rgba(6, 143, 255, 0.15);
+}
+
+.clips-empty {
+    text-align: center;
+    padding: 24px 8px;
+    color: #666;
+}
+
+.clips-empty-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+
+.clips-empty-hint {
+    font-size: 13px;
+    line-height: 1.5;
 }
 
 .panel-header {
@@ -88,15 +140,39 @@
 .clip-item {
     background: rgba(255, 255, 255, 0.7);
     border-radius: 12px;
-    padding: 12px;
+    padding: 12px 36px 12px 12px;
     margin-bottom: 12px;
     max-height: 100px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease, box-shadow 0.25s ease, opacity 0.18s ease;
     border: 1px solid rgba(0, 0, 0, 0.1);
     position: relative;
-    overflow: scroll;
+    overflow: auto;
     user-select: none;
+    /* staggered entry */
+    animation: clip-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--i, 0) * 30ms);
+}
+
+@keyframes clip-in {
+    from { opacity: 0; transform: translateY(8px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.clip-item.copied {
+    background: #21BF73;
+    color: #fff;
+    transform: scale(0.98);
+}
+
+.clip-item.removing {
+    opacity: 0;
+    transform: translateX(16px) scale(0.96);
+}
+
+.clip-item:focus-visible {
+    outline: 2px solid #068FFF;
+    outline-offset: 2px;
 }
 
 .clip-item:hover {
@@ -139,7 +215,8 @@
     justify-content: center;
 }
 
-.clip-item:hover  {
+.clip-item:hover .delete-btn,
+.clip-item:focus-visible .delete-btn {
     opacity: 1;
 }
 

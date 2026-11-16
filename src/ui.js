@@ -25,6 +25,7 @@
             <div class="panel-title">Quick Access Clips</div>
             <button class="add-btn">+ New</button>
         </div>
+        <input class="clip-search" type="search" placeholder="Search clips…" hidden />
         <div class="clips-container"></div>
     `;
         return panel;
@@ -36,6 +37,10 @@
         modal.innerHTML = `
         <h3 class="modal-title" style="user-select: none; margin-bottom: 5px;">Save a New Clip</h3>
         <textarea class="modal-textarea" placeholder="Enter text to save..."></textarea>
+        <div class="modal-footer">
+            <span class="modal-counter">0 / 2000</span>
+            <span class="modal-hint">Enter to save · Shift+Enter for a new line</span>
+        </div>
         <div class="modal-buttons">
             <button class="modal-btn cancel-btn">Cancel</button>
             <button class="modal-btn save-btn">Save</button>
