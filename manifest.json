@@ -1,11 +1,15 @@
 {
   "manifest_version": 3,
   "name": "Cliply: Save & Copy Clips",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Cliply: A simple, intuitive tool for saving, copying, and managing text snippets on any webpage.",
   "permissions": ["storage", "clipboardWrite"],
+  "background": {
+    "service_worker": "./dist/background.bundle.js"
+  },
   "action": {
-    "default_title": "Clipy+",
+    "default_title": "Cliply",
+    "default_popup": "./dist/popup.html",
     "default_icon": {
       "16": "./icons/icon24.png",
       "24": "./icons/icon24.png",
@@ -19,11 +23,17 @@
     "48": "./icons/icon24.png",
     "128": "./icons/icon24.png"
   },
+  "commands": {
+    "toggle-panel": {
+      "suggested_key": { "default": "Alt+C", "mac": "Alt+C" },
+      "description": "Toggle the Cliply panel"
+    }
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "css": ["./dist/styles.bundle.css"],
-      "js": ["./dist/content.bundle.js"]
+      "js": ["./dist/content.bundle.js"],
+      "run_at": "document_idle"
     }
   ]
 }
