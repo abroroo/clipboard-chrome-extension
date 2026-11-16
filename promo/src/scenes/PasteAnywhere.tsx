@@ -1,34 +1,37 @@
 import React from "react";
 import { AbsoluteFill, Sequence, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { Bg, Caption, CliplyButton, fadeOut } from "../components";
-import { ADDRESS, C, KOREAN } from "../theme";
+import { ADDRESS, C, KOREAN, useC, Palette } from "../theme";
 
 /**
  * 14–25s. The snippet jumps across 5 stylized apps. ~2.2s each.
  * Vertical mode stacks the window and caption for 9:16.
  */
-type App = { name: string; accent: string; snippet: string; render: (snippet: string, p: number) => React.ReactNode };
+type App = { name: string; accent: string; snippet: string; render: (snippet: string, p: number, c: Palette) => React.ReactNode };
 
-const Field: React.FC<{ label?: string; value?: React.ReactNode; accent: string; wide?: boolean }> = ({ label, value, accent, wide }) => (
-  <div style={{ marginBottom: 14 }}>
-    {label && <div style={{ fontSize: 15, color: "#8A94A6", marginBottom: 6, fontWeight: 500 }}>{label}</div>}
-    <div
-      style={{
-        border: `2px solid ${value ? accent : "rgba(255,255,255,0.12)"}`,
-        background: "rgba(255,255,255,0.04)",
-        borderRadius: 10,
-        padding: "12px 16px",
-        fontSize: 22,
-        minHeight: 50,
-        width: wide ? "100%" : 420,
-        color: "#F5F7FA",
-        boxShadow: value ? `0 0 0 4px ${accent}22` : "none",
-      }}
-    >
-      {value}
+const Field: React.FC<{ label?: string; value?: React.ReactNode; accent: string; wide?: boolean }> = ({ label, value, accent, wide }) => {
+  const c = useC();
+  return (
+    <div style={{ marginBottom: 14 }}>
+      {label && <div style={{ fontSize: 15, color: c.muted, marginBottom: 6, fontWeight: 500 }}>{label}</div>}
+      <div
+        style={{
+          border: `2px solid ${value ? accent : c.fieldBorder}`,
+          background: c.bg3,
+          borderRadius: 10,
+          padding: "12px 16px",
+          fontSize: 22,
+          minHeight: 50,
+          width: wide ? "100%" : 420,
+          color: c.text,
+          boxShadow: value ? `0 0 0 4px ${accent}22` : "none",
+        }}
+      >
+        {value}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const Snip: React.FC<{ text: string; p: number; accent: string }> = ({ text, p, accent }) => (
   <span style={{ display: "inline-block", transform: `scale(${0.6 + 0.4 * p})`, transformOrigin: "left center", opacity: p, background: `${accent}33`, borderRadius: 6, padding: "0 6px" }}>
@@ -68,13 +71,13 @@ const APPS: App[] = [
     name: "Chat",
     accent: C.green,
     snippet: KOREAN,
-    render: (s, p) => (
+    render: (s, p, c) => (
       <div style={{ display: "flex", flexDirection: "column", gap: 12, height: "100%" }}>
         {["Hey! Got your package 📦", "Let me know if it all looks right"].map((m, i) => (
-          <div key={i} style={{ alignSelf: "flex-start", background: "rgba(255,255,255,0.08)", borderRadius: 16, padding: "12px 18px", fontSize: 22, maxWidth: "70%" }}>{m}</div>
+          <div key={i} style={{ alignSelf: "flex-start", background: c.bg3, borderRadius: 16, padding: "12px 18px", fontSize: 22, maxWidth: "70%" }}>{m}</div>
         ))}
         <div style={{ marginTop: "auto" }}>
-          <Field value={p > 0.01 ? <Snip text={s} p={p} accent={C.green} /> : <span style={{ color: "#8A94A6" }}>Message…</span>} accent={C.green} wide />
+          <Field value={p > 0.01 ? <Snip text={s} p={p} accent={C.green} /> : <span style={{ color: c.muted }}>Message…</span>} accent={C.green} wide />
         </div>
       </div>
     ),
@@ -83,12 +86,12 @@ const APPS: App[] = [
     name: "Docs",
     accent: "#A78BFA",
     snippet: ADDRESS,
-    render: (s, p) => (
-      <div style={{ fontSize: 24, lineHeight: 1.7, color: "#E6E9EF" }}>
+    render: (s, p, c) => (
+      <div style={{ fontSize: 24, lineHeight: 1.7, color: c.text2 }}>
         <div style={{ fontSize: 34, fontWeight: 700, marginBottom: 10 }}>Invoice #0142</div>
         <div>Billed to:</div>
         <div><Snip text={s} p={p} accent="#A78BFA" /></div>
-        <div style={{ color: "#8A94A6", marginTop: 18 }}>Due in 14 days · Net 14</div>
+        <div style={{ color: c.muted, marginTop: 18 }}>Due in 14 days · Net 14</div>
       </div>
     ),
   },
@@ -96,10 +99,10 @@ const APPS: App[] = [
     name: "Support",
     accent: "#F472B6",
     snippet: "Thanks for reaching out! I'll get back to you by EOD.",
-    render: (s, p) => (
+    render: (s, p, c) => (
       <>
-        <div style={{ background: "rgba(255,255,255,0.06)", borderRadius: 12, padding: "14px 18px", fontSize: 21, marginBottom: 16 }}>
-          <span style={{ color: "#8A94A6" }}>Customer · </span>Hi, where is my order?
+        <div style={{ background: c.bg3, borderRadius: 12, padding: "14px 18px", fontSize: 21, marginBottom: 16 }}>
+          <span style={{ color: c.muted }}>Customer · </span>Hi, where is my order?
         </div>
         <Field label="Reply" value={p > 0.01 ? <Snip text={s} p={p} accent="#F472B6" /> : undefined} accent="#F472B6" wide />
       </>
@@ -110,6 +113,7 @@ const APPS: App[] = [
 const Window: React.FC<{ app: App; width: number; height: number }> = ({ app, width, height }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const c = useC();
   const PASTE = 16;
   const p = spring({ frame: frame - PASTE, fps, config: { damping: 10, stiffness: 220, mass: 0.6 } });
   const pop = spring({ frame: frame - PASTE, fps, config: { damping: 8, stiffness: 300 }, durationInFrames: 14 });
@@ -118,19 +122,19 @@ const Window: React.FC<{ app: App; width: number; height: number }> = ({ app, wi
       style={{
         width,
         height,
-        background: C.bg2,
+        background: c.bg2,
         borderRadius: 18,
-        border: "1px solid rgba(255,255,255,0.08)",
-        boxShadow: "0 30px 80px rgba(0,0,0,0.5)",
+        border: `1px solid ${c.border}`,
+        boxShadow: c.windowShadow,
         overflow: "hidden",
         position: "relative",
       }}
     >
-      <div style={{ height: 52, display: "flex", alignItems: "center", padding: "0 18px", gap: 8, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      <div style={{ height: 52, display: "flex", alignItems: "center", padding: "0 18px", gap: 8, borderBottom: `1px solid ${c.border}` }}>
         {["#FF5F57", "#FEBC2E", "#28C840"].map((c) => <div key={c} style={{ width: 12, height: 12, borderRadius: 6, background: c }} />)}
-        <div style={{ marginLeft: 14, fontSize: 15, color: "#8A94A6", fontWeight: 500 }}>{app.name}</div>
+        <div style={{ marginLeft: 14, fontSize: 15, color: c.muted, fontWeight: 500 }}>{app.name}</div>
       </div>
-      <div style={{ padding: 28, height: height - 52 }}>{app.render(app.snippet, p)}</div>
+      <div style={{ padding: 28, height: height - 52 }}>{app.render(app.snippet, p, c)}</div>
       {/* the pop: a small Cliply button pulse in the title bar when pasting */}
       <div style={{ position: "absolute", right: 14, top: 6, transform: `scale(${0.8 + 0.4 * (1 - Math.abs(pop - 0.5) * 2)})`, opacity: frame >= PASTE - 2 ? 1 : 0.5 }}>
         <CliplyButton size={40} />

@@ -1,19 +1,20 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, random } from "remotion";
-import { ADDRESS, C, FONT } from "../theme";
+import { ADDRESS, FONT, useC } from "../theme";
 
 /**
  * 9–11s. Text floods the screen, then a hard cut to black. Silence.
  */
 export const Overflow: React.FC = () => {
   const frame = useCurrentFrame();
+  const C = useC();
   const CUT = 36; // frame where everything cuts to black
   const rows = 14;
   const zoom = interpolate(frame, [0, CUT], [1, 1.35], { extrapolateRight: "clamp" });
   const flash = interpolate(frame, [CUT - 3, CUT], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   if (frame >= CUT) {
-    return <AbsoluteFill style={{ background: "#000" }} />;
+    return <AbsoluteFill style={{ background: C.bg === "#0B0F17" ? "#000" : "#fff" }} />;
   }
 
   return (
@@ -43,7 +44,7 @@ export const Overflow: React.FC = () => {
           );
         })}
       </AbsoluteFill>
-      <AbsoluteFill style={{ background: "#fff", opacity: flash }} />
+      <AbsoluteFill style={{ background: C.bg === "#0B0F17" ? "#fff" : "#000", opacity: flash }} />
     </AbsoluteFill>
   );
 };

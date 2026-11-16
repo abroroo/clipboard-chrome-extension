@@ -1,20 +1,16 @@
 import React from "react";
 import { AbsoluteFill, Img, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { C, FONT } from "./theme";
+import { C, FONT, useC } from "./theme";
 
-export const Bg: React.FC<{ children?: React.ReactNode; glow?: boolean }> = ({ children, glow = true }) => (
-  <AbsoluteFill style={{ background: C.bg, fontFamily: FONT, color: C.text, overflow: "hidden" }}>
-    {glow && (
-      <AbsoluteFill
-        style={{
-          background:
-            "radial-gradient(60% 50% at 50% 0%, rgba(6,122,254,0.18), transparent 70%), radial-gradient(40% 40% at 90% 100%, rgba(254,179,0,0.08), transparent 70%)",
-        }}
-      />
-    )}
-    {children}
-  </AbsoluteFill>
-);
+export const Bg: React.FC<{ children?: React.ReactNode; glow?: boolean }> = ({ children, glow = true }) => {
+  const c = useC();
+  return (
+    <AbsoluteFill style={{ background: c.bg, fontFamily: FONT, color: c.text, overflow: "hidden" }}>
+      {glow && <AbsoluteFill style={{ background: c.glow }} />}
+      {children}
+    </AbsoluteFill>
+  );
+};
 
 export const Caption: React.FC<{ text: string; at?: number; size?: number; bottom?: number }> = ({ text, at = 0, size = 56, bottom = 120 }) => {
   const frame = useCurrentFrame();
@@ -49,7 +45,7 @@ export const CliplyButton: React.FC<{ size?: number; style?: React.CSSProperties
       height: size,
       borderRadius: "50%",
       background: "rgba(255,255,255,0.92)",
-      boxShadow: `0 ${size / 8}px ${size / 3}px rgba(0,0,0,0.35), 0 0 0 ${size / 48}px rgba(255,255,255,0.08)`,
+      boxShadow: `0 ${size / 8}px ${size / 3}px rgba(0,0,0,0.22), 0 0 0 ${size / 48}px rgba(0,0,0,0.06)`,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",

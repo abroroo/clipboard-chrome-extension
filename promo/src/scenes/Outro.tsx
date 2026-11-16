@@ -1,12 +1,13 @@
 import React from "react";
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { Bg, CliplyButton } from "../components";
-import { C } from "../theme";
+import { useC } from "../theme";
 
 /** 25–30s. Logo, name, tagline, Chrome CTA. */
 export const Outro: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const C = useC();
   const logo = spring({ frame, fps, config: { damping: 12, stiffness: 120 } });
   const name = spring({ frame: frame - 8, fps, config: { damping: 200 } });
   const tag = spring({ frame: frame - 18, fps, config: { damping: 200 } });

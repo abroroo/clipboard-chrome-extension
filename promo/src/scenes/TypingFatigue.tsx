@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig, spring, random } from "remotion";
 import { Bg, Caption, Caret, fadeOut, typed } from "../components";
-import { ADDRESS, C } from "../theme";
+import { ADDRESS, useC } from "../theme";
 
 /**
  * 0–9s. The same address typed over and over.
@@ -22,6 +22,7 @@ const REPEATS = [
 export const TypingFatigue: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
+  const C = useC();
 
   const activeIdx = Math.max(0, REPEATS.findIndex((r, i) => frame >= r.start && (i === REPEATS.length - 1 || frame < REPEATS[i + 1].start)));
   const r = REPEATS[activeIdx];
@@ -57,7 +58,7 @@ export const TypingFatigue: React.FC = () => {
             style={{
               transform: `translate(${shakeX}px, ${shakeY}px) scale(${scale})`,
               background: C.bg2,
-              border: `2px solid ${interpolate(stress, [0, 1], [0, 1]) > 0.6 ? C.red : "rgba(255,255,255,0.12)"}`,
+              border: `2px solid ${stress > 0.6 ? C.red : C.fieldBorder}`,
               borderRadius: 14,
               padding: "18px 26px",
               minWidth: 520,
