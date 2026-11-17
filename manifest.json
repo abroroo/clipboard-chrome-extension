@@ -5,23 +5,23 @@
   "description": "Cliply: A simple, intuitive tool for saving, copying, and managing text snippets on any webpage.",
   "permissions": ["storage", "clipboardWrite"],
   "background": {
-    "service_worker": "./dist/background.bundle.js"
+    "service_worker": "dist/background.bundle.js"
   },
   "action": {
     "default_title": "Cliply",
-    "default_popup": "./dist/popup.html",
+    "default_popup": "dist/popup.html",
     "default_icon": {
-      "16": "./icons/icon24.png",
-      "24": "./icons/icon24.png",
-      "48": "./icons/icon24.png",
-      "128": "./icons/icon24.png"
+      "16": "icons/icon24.png",
+      "24": "icons/icon24.png",
+      "48": "icons/icon24.png",
+      "128": "icons/icon24.png"
     }
   },
   "icons": {
-    "16": "./icons/icon24.png",
-    "24": "./icons/icon24.png",
-    "48": "./icons/icon24.png",
-    "128": "./icons/icon24.png"
+    "16": "icons/icon24.png",
+    "24": "icons/icon24.png",
+    "48": "icons/icon24.png",
+    "128": "icons/icon24.png"
   },
   "commands": {
     "toggle-panel": {
@@ -32,7 +32,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["./dist/content.bundle.js"],
+      "js": ["dist/content.bundle.js"],
       "run_at": "document_idle"
     }
   ]
