@@ -66,9 +66,11 @@ export const Cursor: React.FC<{ x: number; y: number; click?: number; scale?: nu
 );
 
 /** Real Cliply panel look: glass, 16px radius, header with + New, clip rows. */
-export const Panel: React.FC<{ clips: string[]; activeIndex?: number; width?: number; scale?: number; style?: React.CSSProperties }> = ({
+export const Panel: React.FC<{ clips: string[]; activeIndex?: number; pinnedIndex?: number; search?: string; width?: number; scale?: number; style?: React.CSSProperties }> = ({
   clips,
   activeIndex = -1,
+  pinnedIndex = -1,
+  search,
   width = 320,
   scale = 1.6,
   style,
@@ -89,19 +91,28 @@ export const Panel: React.FC<{ clips: string[]; activeIndex?: number; width?: nu
   >
     <div style={{ padding: 16, borderBottom: "1px solid rgba(0,0,0,0.1)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       <div style={{ fontSize: 16, fontWeight: 600, color: "#1a1a1a" }}>Quick Access Clips</div>
-      <div style={{ border: "1px solid rgba(0,0,0,0.1)", borderRadius: 8, padding: "6px 16px", fontWeight: 500, color: "#424242" }}>+ New</div>
+      <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+        <div style={{ border: "1px solid rgba(0,0,0,0.1)", borderRadius: 8, padding: "6px 16px", fontWeight: 500, color: "#424242" }}>+ New</div>
+        <div style={{ width: 30, textAlign: "center", fontSize: 18, color: "#424242" }}>⋯</div>
+      </div>
     </div>
+    {search !== undefined && (
+      <div style={{ margin: "12px 16px 0", padding: "8px 12px", border: `1px solid ${search ? C.blue : "rgba(0,0,0,0.1)"}`, borderRadius: 8, background: "rgba(255,255,255,0.8)", color: search ? "#333" : "#999", boxShadow: search ? "0 0 0 3px rgba(6,143,255,0.15)" : "none" }}>
+        {search || "Search clips…"}
+      </div>
+    )}
     <div style={{ padding: 16 }}>
       {clips.map((t, i) => (
         <div
           key={i}
           style={{
-            background: i === activeIndex ? C.yellow : "rgba(255,255,255,0.7)",
+            background: i === activeIndex ? C.yellow : i === pinnedIndex ? "rgba(254,179,0,0.08)" : "rgba(255,255,255,0.7)",
             color: i === activeIndex ? "#000" : "#333",
             borderRadius: 12,
-            padding: 12,
+            padding: i === pinnedIndex ? "12px 44px 12px 12px" : 12,
             marginBottom: i === clips.length - 1 ? 0 : 12,
-            border: "1px solid rgba(0,0,0,0.1)",
+            border: `1px solid ${i === pinnedIndex ? "rgba(254,179,0,0.6)" : "rgba(0,0,0,0.1)"}`,
+            position: "relative",
             fontSize: 16,
             lineHeight: 1.5,
             transform: i === activeIndex ? "translateY(-4px)" : "none",
@@ -109,6 +120,9 @@ export const Panel: React.FC<{ clips: string[]; activeIndex?: number; width?: nu
           }}
         >
           {t}
+          {i === pinnedIndex && (
+            <div style={{ position: "absolute", right: 8, top: "50%", transform: "translateY(-50%)", width: 24, height: 24, borderRadius: 12, background: C.yellow, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13 }}>★</div>
+          )}
         </div>
       ))}
     </div>

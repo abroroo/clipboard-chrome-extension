@@ -6,6 +6,7 @@ import { Overflow } from "./scenes/Overflow";
 import { TheClick } from "./scenes/TheClick";
 import { PasteAnywhere } from "./scenes/PasteAnywhere";
 import { Outro } from "./scenes/Outro";
+import { Shot1, Shot2, Shot3, Shot4, Shot5, StoreIcon, TileMarquee, TileSmall } from "./Marketing";
 
 const S = { fatigue: 270, overflow: 60, click: 90, paste: 330, outro: 150 }; // 900 frames = 30s
 
@@ -33,6 +34,15 @@ export const Root: React.FC = () => (
     <Composition id="PasteLoopVerticalLight" component={PasteLoop} defaultProps={{ mode: "light", vertical: true, perApp: 60 }} durationInFrames={300} fps={FPS} width={1080} height={1920} />
     <Composition id="TypingFatigue" component={TypingFatigue} durationInFrames={S.fatigue} fps={FPS} width={1920} height={1080} />
     <Composition id="TheClick" component={TheClick} durationInFrames={S.click} fps={FPS} width={1920} height={1080} />
+    {/* Chrome Web Store assets (render as stills) */}
+    <Composition id="StoreIcon" component={StoreIcon} durationInFrames={1} fps={FPS} width={128} height={128} />
+    <Composition id="TileSmall" component={TileSmall} durationInFrames={1} fps={FPS} width={440} height={280} />
+    <Composition id="TileMarquee" component={TileMarquee} durationInFrames={1} fps={FPS} width={1400} height={560} />
+    <Composition id="Shot1" component={Shot1} durationInFrames={1} fps={FPS} width={1280} height={800} />
+    <Composition id="Shot2" component={Shot2} durationInFrames={1} fps={FPS} width={1280} height={800} />
+    <Composition id="Shot3" component={Shot3} durationInFrames={1} fps={FPS} width={1280} height={800} />
+    <Composition id="Shot4" component={Shot4} durationInFrames={1} fps={FPS} width={1280} height={800} />
+    <Composition id="Shot5" component={Shot5} durationInFrames={1} fps={FPS} width={1280} height={800} />
     <Composition id="Outro" component={Outro} durationInFrames={S.outro} fps={FPS} width={1920} height={1080} />
   </>
 );
