@@ -80,7 +80,7 @@ export const savePosition = (position) => set(local, { position }).catch((e) => 
 // ---- settings (synced) ----
 export async function loadSettings() {
     const { settings } = await get(sync, ['settings']);
-    return { hiddenHosts: [], ...(settings || {}) };
+    return { hiddenHosts: [], snapToEdge: true, ...(settings || {}) };
 }
 export async function saveSettings(patch) {
     const current = await loadSettings();

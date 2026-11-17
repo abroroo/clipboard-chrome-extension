@@ -1,13 +1,22 @@
 /**
- * Free-form dragging for the floating button: drag anywhere, snap to the nearest
- * horizontal edge on release, remember the spot per device, and tell a click from a drag.
+ * Dragging for the floating button.
+ *
+ * - Drag anywhere; a short movement threshold separates a click from a drag.
+ * - On release, either snap to the nearest left/right edge (default) or stay
+ *   exactly where dropped, depending on the `snapToEdge` setting.
+ * - The position is stored per device as viewport ratios, so it survives
+ *   reloads and adapts to different window sizes.
+ *
+ * Stored shapes:
+ *   snapped: { side: 'left' | 'right', top: <0..1> }
+ *   free:    { mode: 'free', left: <0..1>, top: <0..1> }
  */
 import { loadPosition, savePosition } from './storage.js';
 
 const DRAG_THRESHOLD_PX = 5;
 const EDGE_MARGIN_PX = 20;
 
-export function enableDragging(floatingBtn, { onClick } = {}) {
+export function enableDragging(floatingBtn, { onClick, getSnapToEdge = () => true } = {}) {
     let pointerId = null;
     let dragging = false;
     let startX = 0, startY = 0, originLeft = 0, originTop = 0;
@@ -21,26 +30,47 @@ export function enableDragging(floatingBtn, { onClick } = {}) {
     const place = (left, top) => {
         floatingBtn.style.left = `${left}px`;
         floatingBtn.style.top = `${top}px`;
+        // Which side the panel should open towards: away from the nearer edge.
+        floatingBtn.dataset.side = left + size() / 2 < window.innerWidth / 2 ? 'left' : 'right';
     };
     const edgeLeft = (side) => (side === 'left' ? EDGE_MARGIN_PX : window.innerWidth - size() - EDGE_MARGIN_PX);
 
-    const snapToEdge = () => {
-        const rect = floatingBtn.getBoundingClientRect();
-        const side = rect.left + rect.width / 2 < window.innerWidth / 2 ? 'left' : 'right';
-        const { top } = clamp(edgeLeft(side), rect.top);
+    const glide = () => {
         floatingBtn.classList.add('snapping');
-        place(edgeLeft(side), top);
-        floatingBtn.dataset.side = side;
         setTimeout(() => floatingBtn.classList.remove('snapping'), 350);
-        return { side, top: top / window.innerHeight };
+    };
+
+    /** Settles the button after a drag and returns the shape to store. */
+    const settle = () => {
+        const rect = floatingBtn.getBoundingClientRect();
+        if (getSnapToEdge()) {
+            const side = rect.left + rect.width / 2 < window.innerWidth / 2 ? 'left' : 'right';
+            const { top } = clamp(edgeLeft(side), rect.top);
+            glide();
+            place(edgeLeft(side), top);
+            return { side, top: top / window.innerHeight };
+        }
+        const { left, top } = clamp(rect.left, rect.top);
+        place(left, top);
+        return { mode: 'free', left: left / window.innerWidth, top: top / window.innerHeight };
     };
 
     const applyStored = (pos) => {
-        const side = pos?.side === 'left' ? 'left' : 'right';
         const topRatio = typeof pos?.top === 'number' ? pos.top : 0.5;
+        if (pos?.mode === 'free' && typeof pos.left === 'number') {
+            const { left, top } = clamp(pos.left * window.innerWidth, topRatio * window.innerHeight);
+            if (getSnapToEdge()) {
+                // Setting was switched on since this was saved: snap to the nearer edge.
+                const side = left + size() / 2 < window.innerWidth / 2 ? 'left' : 'right';
+                place(edgeLeft(side), clamp(edgeLeft(side), top).top);
+            } else {
+                place(left, top);
+            }
+            return;
+        }
+        const side = pos?.side === 'left' ? 'left' : 'right';
         const { top } = clamp(edgeLeft(side), topRatio * window.innerHeight);
         place(edgeLeft(side), top);
-        floatingBtn.dataset.side = side;
     };
 
     floatingBtn.addEventListener('pointerdown', (e) => {
@@ -78,7 +108,7 @@ export function enableDragging(floatingBtn, { onClick } = {}) {
             dragging = false;
             floatingBtn.classList.remove('dragging');
             document.body.style.userSelect = '';
-            savePosition(snapToEdge());
+            savePosition(settle());
         } else {
             onClick?.();
         }
@@ -86,12 +116,22 @@ export function enableDragging(floatingBtn, { onClick } = {}) {
     floatingBtn.addEventListener('pointerup', end);
     floatingBtn.addEventListener('pointercancel', end);
 
+    const restore = () => loadPosition().then(applyStored);
+
     let resizeTimer = null;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => loadPosition().then(applyStored), 100);
+        resizeTimer = setTimeout(restore, 100);
     });
 
     applyStored(null); // place immediately at the default spot, then restore the saved one
-    loadPosition().then(applyStored);
+    restore();
+
+    return {
+        /** Call when the snap setting changes: re-settles the button in place. */
+        onSnapSettingChanged() {
+            if (getSnapToEdge()) glide();
+            savePosition(settle());
+        },
+    };
 }

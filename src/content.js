@@ -16,8 +16,8 @@ async function mount() {
     if (document.getElementById(HOST_ID)) return; // already injected (extension reload)
     if (window.top !== window) return;            // skip iframes; one Cliply per page
 
-    const { hiddenHosts } = await loadSettings().catch(() => ({ hiddenHosts: [] }));
-    if (hiddenHosts.includes(location.hostname)) return;
+    let settings = await loadSettings().catch(() => ({ hiddenHosts: [], snapToEdge: true }));
+    if (settings.hiddenHosts.includes(location.hostname)) return;
 
     // Everything lives in a closed-off Shadow DOM so host-page CSS can't leak in or out.
     const host = document.createElement('div');
@@ -43,10 +43,21 @@ async function mount() {
     await loadClips();
     render();
 
-    // Keep in step with other tabs / devices / the popup.
-    onClipsChanged(async () => { await loadClips(); render(); });
+    const drag = enableDragging(floatingBtn, {
+        onClick: togglePanel,
+        getSnapToEdge: () => settings.snapToEdge !== false,
+    });
 
-    enableDragging(floatingBtn, { onClick: togglePanel });
+    // Keep in step with other tabs / devices / the popup.
+    onClipsChanged(async (changes) => {
+        if (changes.settings) {
+            const prevSnap = settings.snapToEdge;
+            settings = { hiddenHosts: [], snapToEdge: true, ...(changes.settings.newValue || {}) };
+            if (settings.snapToEdge !== prevSnap) drag.onSnapSettingChanged();
+        }
+        await loadClips();
+        render();
+    });
 }
 
 mount().catch((err) => console.error('[Cliply] failed to start', err));

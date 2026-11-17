@@ -10,7 +10,8 @@ async function refresh() {
     const clips = await loadClips();
     $('#count').textContent = clips.length;
 
-    const { hiddenHosts } = await loadSettings();
+    const { hiddenHosts, snapToEdge } = await loadSettings();
+    $('#snap').checked = snapToEdge !== false;
     const list = $('#hidden-list');
     list.innerHTML = '';
     $('#hidden-empty').hidden = hiddenHosts.length > 0;
@@ -29,6 +30,16 @@ async function refresh() {
         list.appendChild(li);
     }
 }
+
+$('#snap').addEventListener('change', async (e) => {
+    try {
+        await saveSettings({ snapToEdge: e.target.checked });
+        status(e.target.checked ? 'Button will snap to the nearest edge.' : 'Button will stay where you drop it.');
+    } catch {
+        e.target.checked = !e.target.checked;
+        status('Could not save that setting.', true);
+    }
+});
 
 chrome.commands.getAll((cmds) => {
     const c = cmds.find((x) => x.name === 'toggle-panel');
