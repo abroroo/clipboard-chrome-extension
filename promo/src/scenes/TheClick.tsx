@@ -24,7 +24,6 @@ export const TheClick: React.FC = () => {
   const CLIP1 = { x: 1010, y: 450 };
   const cx = interpolate(frame, [12, CLICK1 - 4, CLICK1 + 10, CLICK2 - 4], [1700, BTN.x + 10, BTN.x + 10, CLIP1.x], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const cy = interpolate(frame, [12, CLICK1 - 4, CLICK1 + 10, CLICK2 - 4], [1000, BTN.y + 10, BTN.y + 10, CLIP1.y], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const ease = (t: number) => t; // interpolate already linear; spring on press handles feel
 
   // ring pulse around button while idle
   const ring = interpolate((frame - BTN_IN) % 30, [0, 30], [0, 1]);
@@ -71,7 +70,7 @@ export const TheClick: React.FC = () => {
         )}
 
         <Toast text="Copied to clipboard!" at={CLICK2 + 3} scale={1.6} />
-        <Cursor x={ease(cx)} y={ease(cy)} click={frame >= CLICK1 && frame < CLICK1 + 6 ? 1 : frame >= CLICK2 && frame < CLICK2 + 6 ? 1 : 0} />
+        <Cursor x={cx} y={cy} click={frame >= CLICK1 && frame < CLICK1 + 6 ? 1 : frame >= CLICK2 && frame < CLICK2 + 6 ? 1 : 0} />
 
         <Caption text="Or just click." at={CLICK1 + 6} bottom={110} />
       </AbsoluteFill>

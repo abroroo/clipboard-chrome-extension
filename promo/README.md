@@ -2,14 +2,28 @@
 
 ```bash
 npm install
-npm run studio          # live preview + scrubbing
-npm run render          # out/cliply-promo.mp4   (1920x1080, 30s)
-npm run render:vertical # out/cliply-loop-vertical.mp4 (1080x1920, 10s loop for Shorts/TikTok)
+npm run studio            # live preview + scrubbing
+npm run render:light:4k   # out/cliply-promo-light-4k.mp4  (3840x2160, 30s, the YouTube version)
+npm run render            # out/cliply-promo.mp4           (dark, 1080p)
+npm run render:vertical   # out/cliply-loop-vertical.mp4   (1080x1920 loop for Shorts)
+npm run render:thumb      # out/youtube-thumbnail.png
+npm run render:store      # out/store/*.png  Chrome Web Store icon, screenshots, tiles
 ```
 
-Scenes live in `src/scenes/`, one component each, joined in `src/Root.tsx`.
-Brand tokens and copy (address, Korean phrase) are in `src/theme.ts`.
-The real Cliply button/panel/toast are rebuilt in `src/components.tsx`.
+## Layout
 
-No audio yet. Suggested sound design: typewriter that speeds up (0–9s), hard cut to silence (9–11s),
-single soft click (12s), one "pop" per paste (14–25s), warm swell on the outro.
+| Path | What |
+|---|---|
+| `src/scenes/` | One component per scene, joined in `src/Root.tsx` |
+| `src/components.tsx` | Rebuilt Cliply button, panel, toast, cursor |
+| `src/Marketing.tsx` | Store screenshots, tiles, YouTube thumbnail |
+| `src/theme.ts` | Brand colours (dark + light) and copy |
+| `public/promo-audio.wav` | Final soundtrack, generated (do not edit by hand) |
+| `vo/Line1-4.mp3` | Voice-over lines (ElevenLabs) |
+| `music/` | Licensed tracks kept for reference (git-ignored) |
+
+## Sound
+
+`python3 scripts/make-audio.py` synthesizes every sound effect and the music bed, mixes in the
+voice-over with ducking, and writes `public/promo-audio.wav`. Event timings are in video frames
+(30 fps) and must match the scenes. Re-run it after changing scene timing, then re-render.
