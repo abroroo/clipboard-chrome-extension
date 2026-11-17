@@ -123,17 +123,16 @@ export const Shot5: React.FC = () => {
 
 /* ---------- tiles ---------- */
 
-const TileBase: React.FC<{ w: number; h: number; logo: number; title: number; sub: number; gap?: number }> = ({ w, h, logo, title, sub, gap = 28 }) => (
-  <AbsoluteFill style={{ background: C.bg, fontFamily: FONT, overflow: "hidden" }}>
-    <AbsoluteFill style={{ background: C.glow }} />
-    <AbsoluteFill style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap }}>
+const TileBase: React.FC<{ w: number; h: number; logo: number; title: number; sub: number; gap?: number }> = ({ logo, title, sub, gap = 28 }) => (
+  <Light><Bg>
+    <AbsoluteFill style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", gap, fontFamily: FONT }}>
       <CliplyButton size={logo} />
       <div>
-        <div style={{ fontSize: title, fontWeight: 800, letterSpacing: -title * 0.03, color: C.text, lineHeight: 1 }}>Cliply</div>
-        <div style={{ fontSize: sub, color: C.muted, marginTop: sub * 0.35, fontWeight: 500 }}>Save once. <span style={{ color: C.text }}>Paste anywhere.</span></div>
+        <div style={{ fontSize: title, fontWeight: 800, letterSpacing: -title * 0.03, color: "#111827", lineHeight: 1 }}>Cliply</div>
+        <div style={{ fontSize: sub, color: "#6B7280", marginTop: sub * 0.35, fontWeight: 500 }}>Save once. <span style={{ color: "#111827" }}>Paste anywhere.</span></div>
       </div>
     </AbsoluteFill>
-  </AbsoluteFill>
+  </Bg></Light>
 );
 
 export const TileSmall: React.FC = () => <TileBase w={440} h={280} logo={110} title={64} sub={20} />;
