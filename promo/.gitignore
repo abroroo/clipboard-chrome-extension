@@ -1,2 +1,5 @@
 node_modules/
 out/
+*.mp3
+!vo/Line*.mp3
+vo/*/

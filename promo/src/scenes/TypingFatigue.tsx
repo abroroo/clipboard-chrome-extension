@@ -35,9 +35,11 @@ export const TypingFatigue: React.FC = () => {
   const scaleIn = spring({ frame: frame - r.start, fps, config: { damping: 18, stiffness: 180 } });
   const scale = r.scale * (0.96 + 0.04 * scaleIn);
 
-  // counter: fake "typed N times" ticking up with the stress
-  const count = Math.round(interpolate(frame, [0, 60, 150, 240], [1, 3, 19, 47], { extrapolateRight: "clamp" }));
-  const counterIn = spring({ frame: frame - 60, fps, config: { damping: 200 } });
+  // counter: steps up exactly when a new repeat starts, accelerating with the typing
+  const COUNTS = [1, 2, 3, 5, 8, 13, 21, 34, 47];
+  const count = COUNTS[activeIdx];
+  const counterIn = spring({ frame: frame - REPEATS[1].start, fps, config: { damping: 200 } });
+  const bump = spring({ frame: frame - r.start, fps, config: { damping: 10, stiffness: 300 }, durationInFrames: 10 });
 
   // ghost trail of previous repeats, faded
   const ghosts = REPEATS.slice(Math.max(0, activeIdx - 3), activeIdx);
@@ -88,7 +90,7 @@ export const TypingFatigue: React.FC = () => {
             fontVariantNumeric: "tabular-nums",
           }}
         >
-          Typed <span style={{ color: C.text, fontWeight: 800 }}>{count}</span> times
+          Typed <span style={{ display: "inline-block", color: C.text, fontWeight: 800, transform: `scale(${activeIdx > 0 ? 1 + 0.35 * (1 - bump) : 1})` }}>{count}</span> times
         </div>
 
         {frame < 100 ? <Caption text="Typing this again?" at={30} /> : <Caption text="And again..." at={100} />}

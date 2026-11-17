@@ -7,7 +7,9 @@
     "render": "remotion render Promo out/cliply-promo.mp4",
     "render:vertical": "remotion render PasteLoopVertical out/cliply-loop-vertical.mp4",
     "render:light": "remotion render PromoLight out/cliply-promo-light.mp4",
+    "render:light:4k": "remotion render PromoLight out/cliply-promo-light-4k.mp4 --scale=2 --crf=16 --color-space=bt709",
     "render:store": "node scripts/render-store.mjs",
+    "render:thumb": "remotion still YouTubeThumb out/youtube-thumbnail.png --scale=2",
     "render:vertical:light": "remotion render PasteLoopVerticalLight out/cliply-loop-vertical-light.mp4"
   },
   "dependencies": {

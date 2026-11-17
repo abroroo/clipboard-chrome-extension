@@ -144,3 +144,38 @@ export const StoreIcon: React.FC = () => (
     <Img src={staticFile("icon.svg")} style={{ width: 112, height: 112 }} />
   </AbsoluteFill>
 );
+
+/* ---------- YouTube thumbnail (1280x720) ---------- */
+
+/** Big, few words, high contrast: readable at phone-thumbnail size. */
+export const YouTubeThumb: React.FC = () => (
+  <Light><Bg>
+    {/* soft colour blobs for depth */}
+    <div style={{ position: "absolute", right: -120, top: -160, width: 760, height: 760, borderRadius: "50%", background: "radial-gradient(circle, rgba(6,122,254,0.22), transparent 65%)" }} />
+    <div style={{ position: "absolute", right: 180, bottom: -260, width: 620, height: 620, borderRadius: "50%", background: "radial-gradient(circle, rgba(254,179,0,0.25), transparent 65%)" }} />
+
+    {/* left: message */}
+    <div style={{ position: "absolute", left: 72, top: 0, bottom: 0, display: "flex", flexDirection: "column", justifyContent: "center", fontFamily: FONT }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 30 }}>
+        <CliplyButton size={72} />
+        <span style={{ fontSize: 44, fontWeight: 800, letterSpacing: -1.5, color: "#111827" }}>Cliply</span>
+      </div>
+      <div style={{ fontSize: 104, fontWeight: 800, letterSpacing: -4, lineHeight: 0.98, color: "#111827" }}>
+        Stop<br />retyping.
+      </div>
+      <div style={{ fontSize: 66, fontWeight: 800, letterSpacing: -2.5, color: C.blue, marginTop: 20, position: "relative", alignSelf: "flex-start" }}>
+        Paste anywhere.
+        <div style={{ position: "absolute", left: 0, right: 0, bottom: -4, height: 12, borderRadius: 6, background: C.yellow, zIndex: -1, opacity: 0.85 }} />
+      </div>
+    </div>
+
+    {/* right: the product, tilted */}
+    <div style={{ position: "absolute", left: 745, top: 120, transform: "rotate(-4deg)" }}>
+      <Panel clips={["Thanks, talk soon! 👋", "hello@myname.dev", "123 Main Street, Apt 4B"]} activeIndex={1} scale={1.42} />
+    </div>
+    <Cursor x={1060} y={345} scale={1.9} />
+    <div style={{ position: "absolute", right: 46, bottom: 52, background: C.green, color: "#fff", fontFamily: FONT, fontSize: 30, fontWeight: 700, padding: "16px 28px", borderRadius: 16, boxShadow: "0 12px 30px rgba(33,191,115,0.4)", transform: "rotate(-4deg)" }}>
+      ✓ Pasted!
+    </div>
+  </Bg></Light>
+);
