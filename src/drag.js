@@ -92,5 +92,6 @@ export function enableDragging(floatingBtn, { onClick } = {}) {
         resizeTimer = setTimeout(() => loadPosition().then(applyStored), 100);
     });
 
+    applyStored(null); // place immediately at the default spot, then restore the saved one
     loadPosition().then(applyStored);
 }

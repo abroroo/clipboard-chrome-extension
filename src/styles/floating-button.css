@@ -1,8 +1,9 @@
 .clipboard-floating-btn {
     position: fixed;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+    /* left/top are always set in px by drag.js; no transform offset, or the
+       measured position and the applied position drift apart on every grab */
+    left: calc(100vw - 58px);
+    top: 50vh;
     touch-action: none;
     width: 36px;
     height: 36px;
@@ -16,7 +17,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    /* never animate left/top here: the button must track the pointer 1:1 */
+    transition: box-shadow 0.3s ease;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     user-select: none;
